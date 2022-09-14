@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mê truyện chữ</title>
+    <link rel="stylesheet" href="./asset/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./asset/css/main.css" />
+    <link href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" rel="stylesheet">
+    <link rel="icon" href="./asset/favicon.ico" />
+</head>
+<body>
+    <div id="app">
+        <header class="fixed-top">
+            <nav class="navbar navbar--read navbar-light navbar-expand ">
+                <div class="container">
+                    <a href="/home" class="navbar-brand mr-4">
+                        <img  src="./asset/img/logo.png" />                       
+                    </a>
+                    <ul class="navbar-nav mr-auto d-flex align-items-center">
+                        <li class="nav-item dropdown dropdown-hover  me-3" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class='bx bx-menu me-2'></i> Thể Loại
+                            <ul class="dropdown-menu">
+                            </ul>
+                        </li>
+                        
+                        <li class="nav-item dropdown  me-3">
+                            Bảng xếp hạng
+                        </li>
+                    </ul>
+                    <div class="header__search-form ml-auto w-25">
+                        <input type="text" class="form-control border-primary" id="searchBook" placeholder="Tìm kiếm"/>
+                        <button class="search">
+                            <i class='bx bx-search-alt-2' ></i>
+                        </button>
+                    </div>
+                    <ul class="navbar-nav nav-alter mr-auto d-flex align-items-center">
+                        <li class="nav-item   me-3">
+                            <a href="/uploadBook">
+                                <i class='bx bx-up-arrow-alt me-2'></i>
+                                Đăng truyện
+                            </a>
+                        </li>
+                        <li class="nav-item   me-3"></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <main class="container">
+        </main>
+        <div class="toast-container"></div>
+    </div>
+    <input hidden value id="showbook"/>
+
+</body>
+<script type="text/javascript" src="./asset/dist/js/tinymce/tinymce.min.js"></script>
+
+<script type="text/javascript" src="./asset/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="./asset/js/main.js"></script>
+<script type="text/javascript" src="./asset/js/service.js"></script>
+<script type="text/javascript" src="./asset/js/common.js"></script>
+<script type="text/javascript" src="./asset/js/header.js"></script>
+<script type="text/javascript" src="./asset/js/utils.js"></script>
+
+</html>

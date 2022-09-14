@@ -1,0 +1,52 @@
+<div id="bookPage">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="row">
+                <div class="mr-4 col-2">
+                    <img>
+                </div>
+                <div class="col-10">
+                    <h3 class="mb-2"></h3>
+                    <div class="book__category d-inline-block border border-danger px-3 py-1 text-danger rounded-3 me-2 mb-2"></div>
+                    <ul class="list-unstyled d-flex mb-4">
+                        <li class="mr-5"><div class="font-weight-semibold h4 mb-1">562</div><div>Chương</div></li>
+                    </ul>
+                    <div class="book__auth mb-2"></div>
+                    <ul class="list-unstyled d-flex align-items-center mb-2">
+                        <li class="me-3 w-150 btn btn-danger btn-md btn-block font-weight-semibold d-flex align-items-center justify-content-center">Đọc</li>
+                        <li class="me-3 w-150 btn btn-outline-secondary btn-md btn-block font-weight-semibold d-flex align-items-center justify-content-center">Đánh dấu</li>
+
+                    </ul>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-8">
+                    <h3>Giới thiệu</h3>
+                    <div class="book__summary"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    if($('#showbook').value != ''){
+        bookService.getBook($('#showbook').value).then(res =>{
+            if(!res.code || res.code != 'success') return;
+            var data = res.data;
+            $('#bookPage .row .col-12 .row .col-2 img').src = data.bookPoster
+            $('#bookPage .row .col-12 .row .col-10 h3').innerHTML = data.name
+            $('#bookPage .row .col-12 .row .col-10 .book__category').innerHTML = data.category
+            $('#bookPage .row .col-12 .row .col-10 .book__auth').innerHTML = `<i class='bx bxs-user me-1'></i>${data.ather_name}`
+
+            $('#bookPage  .col-8 .book__summary').innerHTML = data.summary;
+
+        })
+
+    }
+</script>
