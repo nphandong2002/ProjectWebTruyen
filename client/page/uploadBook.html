@@ -1,0 +1,105 @@
+
+<div class="row">
+    <h4 class="mb-3"> Đăng truyện</h4>
+    <form class="col-12  p-3 d-flex" action="/" id="uploadBook" method="post">
+      <div class="col-sm-6 col-xs-12">
+        <h5 class="mb-3 mt-3"> Tên truyện</h5>
+        <input class="form-control mb-5" type="text" name="bookName" placeholder="Nhập tên truyện">
+        <h5 class="mb-3"> Tóm tắt truyện</h5>
+        <div class="mb-6">
+          <textarea class="form-control" id="summary" name="summary" ></textarea>
+        </div>
+      </div >
+      <div class="col-sm-6 col-xs-12 ps-5">
+        <h4 class="mt-3">Thể loại</h4>
+        <select data-url="/category/" class="form-select mb-3" data-method="get" >
+          <!-- <option>--Chọn--</option> -->
+        </select>
+        <h4 class="mt-3"> Hình ảnh hiện thị</h4>
+        <div data-name="file" data-id="uploadPost" class="upload-file"> 
+        </div>
+        <div class="d-flex mt-4">
+          <button type="button" class="btn btn-success me-2 submit">Đăng</button>
+          <button type="button" class="btn btn-secondary " onclick="resetForm('uploadBook')">Reset</button>
+        </div>
+      </div>  
+        
+    </form>
+    <form class="col-12  p-3 d-flex disabledbutton" action="/book/uploadD" id="uploadBookDB" method="post" >
+      <div class="col-sm-6 col-xs-12">
+        <h5 class="mb-3 mt-3">Tên Chương</h5>
+        <textarea class="form-control" id="chapter" name="chapter" ></textarea>
+        <h5 class="mb-3 mt-3">Nội dung</h5>
+        <div class="mb-6">
+          <textarea class="tinymce" id="note" name="note" ></textarea>
+        </div>
+      </div >
+      <div class="col-sm-6 col-xs-12 ps-5">
+        <input type="text" value hidden id="bookId" name="bookId">
+        <div class="d-flex mt-4">
+          <button type="submit" class="btn btn-success me-2 submit">Đăng</button>
+          <button type="button" class="btn btn-secondary " onclick="resetForm('uploadBookDB')">Reset</button>
+        </div>
+        
+      </div>  
+        
+    </form>
+</div>
+
+
+
+<script>
+  tinymce.init({
+    selector: '.tinymce'
+  });
+  window.tinymce = tinymce
+  $('#uploadBook .submit').onclick = async ()=>{
+    var form = {
+      "bookName": $('#uploadBook input[name="bookName"]').value,
+      "authorId": ctx.user.id,
+      "bookPoster": null,
+      "categoryId": $('#uploadBook select').value,
+      "summary": $('#uploadBook textarea').value
+    }
+    var file = $("#uploadPost").files[0]
+    bookService.upload(form).then(res => {
+      if(res.code && res.code == 'success'){
+        Toast("Đăng ký truyện thành công");
+        $("#uploadBookDB #bookId").value = res.data
+
+        let formData = new FormData();
+        formData.append("file", file);
+        formData.append("name", `${res.data}_poster.jpg` );
+        postApi(url_uploadImg,null,formData).then(res => {
+          if(res.error){
+            Toast("Hệ thống sảy ra lỗi",1);
+            ctx.start();
+          }
+        })
+        $('#uploadBookDB').classList.remove("disabledbutton");
+        $('#uploadBook').classList.add("d-none");
+        
+      }
+    })
+  }
+  // $('#uploadBookDB .submit').onclick = async ()=>{
+  
+  //   ctx.loadevent();
+
+  // }
+
+    $("#uploadBookDB").onsubmit = function(e) {
+      e.preventDefault();
+      var id = $("#uploadBookDB #bookId").value;
+      var form = {
+        "bookId": parseInt(id),
+        "chapter": $('#uploadBookDB #chapter').value,
+        "note": $('#uploadBookDB #note').value
+      }
+      bookService.uploadb(form);
+      Toast("Thành công");
+      $('[href="/home"]').click()
+    };
+
+ 
+</script>

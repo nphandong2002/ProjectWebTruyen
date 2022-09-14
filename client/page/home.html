@@ -1,0 +1,63 @@
+<div class="row" id="book">
+    <div class="col-9">
+        <h5>Biên tập viên đề cử</h5>
+        <div class="row" id="show">
+        </div>
+    </div>
+    <div class="col-3" >
+        <h5>Top truyện</h5>
+        <div class="row" id="show"></div>
+    </div>
+</div>
+<div class="row" >
+    <h5>Chapter mới</h5>
+    <table class="table mt-3" >
+        <tbody id="chapterNew">
+
+        </tbody>
+    </table>
+</div>
+<script>
+    var children =  function(data){
+            return `<div class = "book__card">
+                <a href = "${data.path}">
+                    <div class = "book__body">
+                        <img src = "${data.bookPoster}"></img>
+                        <div class="book__info">
+                            <div class="book__name">${data.name}</div>
+                            <div class="book__summary text-overflow-1-lines text-overflow-2-lines">${data.summary}</div>
+                            <div class="book__footer book__summary">
+                                <div class="book__auth "><i class='bx bxs-user me-1'></i>${data.ather_name}</div>
+                                <div class="book__category ms-auto">${data.category}</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>`
+        }
+    bookService.showAll().then(res => {
+        if(!res.code || res.code != 'success') return;
+        var data = res.data;     
+        $('#book .col-9 #show').innerHTML = data.map(value => `<div class="col-6">${children(value)}</div>`).join(" ")
+        ctx.loadevent();
+    })
+    bookService.getTop().then(res => {
+        if(!res.code || res.code != 'success') return;
+        var data = res.data;
+        $('#book .col-3 #show').innerHTML = data.map(value => `<div class="col-12">${children(value)}</div>`).join(" ")
+        ctx.loadevent();
+    })
+    bookService.getChapterNew().then(res => {
+        if(!res.code || res.code != 'success') return;
+        var data = res.data;
+        var chapterDiv = function(data){
+            return `<tr>
+                <td class="align-middle text-tertiary">${data.category}</td>
+                <td class="align-middle w-25"><a class="text-overflow-1-lines">${data.name}</a></td>
+                <td class="align-middle w-25"><a class="text-overflow-1-lines">${data.chapter.name}</a></td>
+                <td class="align-middle text-tertiary">${data.ather_name}</td>
+            </tr>`;
+        }
+        $('#chapterNew').innerHTML = data.map(value => chapterDiv(value)).join(" ")
+    })
+</script>
