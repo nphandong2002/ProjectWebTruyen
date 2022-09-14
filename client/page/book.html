@@ -9,7 +9,9 @@
                     <h3 class="mb-2"></h3>
                     <div class="book__category d-inline-block border border-danger px-3 py-1 text-danger rounded-3 me-2 mb-2"></div>
                     <ul class="list-unstyled d-flex mb-4">
-                        <li class="mr-5"><div class="font-weight-semibold h4 mb-1">562</div><div>Chương</div></li>
+                        <li class="me-5 d-flex align-items-center flex-column"><div class="font-weight-semibold h4 mb-1 book_numberChapter">562</div><div>Chương</div></li>
+                        <li class="me-5 d-flex align-items-center flex-column"><div class="font-weight-semibold h4 mb-1 book_numberRead">562</div><div>Người đã đọc</div></li>
+                    
                     </ul>
                     <div class="book__auth mb-2"></div>
                     <ul class="list-unstyled d-flex align-items-center mb-2">
@@ -43,7 +45,10 @@
             $('#bookPage .row .col-12 .row .col-10 h3').innerHTML = data.name
             $('#bookPage .row .col-12 .row .col-10 .book__category').innerHTML = data.category
             $('#bookPage .row .col-12 .row .col-10 .book__auth').innerHTML = `<i class='bx bxs-user me-1'></i>${data.ather_name}`
+            $('#bookPage .row .col-12 .row .col-10 .book_numberChapter').innerHTML = `${data.numberChapter}`
+            $('#bookPage .row .col-12 .row .col-10 .book_numberRead').innerHTML = `${data.numberRead}`
 
+            
             $('#bookPage  .col-8 .book__summary').innerHTML = data.summary;
 
         })
