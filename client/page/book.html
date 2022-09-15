@@ -14,8 +14,8 @@
                     
                     </ul>
                     <div class="book__auth mb-2"></div>
-                    <ul class="list-unstyled d-flex align-items-center mb-2">
-                        <li class="me-3 w-150 btn btn-danger btn-md btn-block font-weight-semibold d-flex align-items-center justify-content-center">Đọc</li>
+                    <ul class="list-unstyled d-flex align-items-center mb-2 event">
+                        <li><a  class="me-3 w-150 btn btn-danger btn-md btn-block font-weight-semibold doc d-flex align-items-center justify-content-center">Đọc</a></li>
                         <li class="me-3 w-150 btn btn-outline-secondary btn-md btn-block font-weight-semibold d-flex align-items-center justify-content-center">Đánh dấu</li>
 
                     </ul>
@@ -30,6 +30,14 @@
                 <div class="col-8">
                     <h3>Giới thiệu</h3>
                     <div class="book__summary"></div>
+                    <div class="row mt-4" >
+                        <h5>Chapter</h5>
+                        <table class="table mt-1" >
+                            <tbody id="chapter">
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -47,10 +55,22 @@
             $('#bookPage .row .col-12 .row .col-10 .book__auth').innerHTML = `<i class='bx bxs-user me-1'></i>${data.ather_name}`
             $('#bookPage .row .col-12 .row .col-10 .book_numberChapter').innerHTML = `${data.numberChapter}`
             $('#bookPage .row .col-12 .row .col-10 .book_numberRead').innerHTML = `${data.numberRead}`
-
-            
             $('#bookPage  .col-8 .book__summary').innerHTML = data.summary;
+            $('#bookPage  .event .doc ').href = data.chapter.path;
 
+        })
+        bookService.getChapter($('#showbook').value).then(res => {
+            if(!res.code || res.code != 'success') return;
+            var data = res.data;
+            var chapterDiv = function(data2){
+                return `<tr>
+                    <td class="align-middle text-tertiary  w-25">${data.category}</td>
+                    <td class="align-middle"><a class="text-overflow-1-lines">${data.name}</a></td>
+                    <td class="align-middle w-25"><a class="text-overflow-1-lines">${data2.name}</a></td>
+                    <td class="align-middle text-tertiary">${data.ather_name}</td>
+                </tr>`;
+            }
+            $('#chapter').innerHTML = data.listChapter.map(value => chapterDiv(value)).join(" ")
         })
 
     }

@@ -24,12 +24,16 @@ ctx.utils = function(){
                 Toast("Đăng xuất thành công")
                 return ctx.start();    
             }
-            if(url.indexOf('book') != -1) {
+            if(url.indexOf('book') != -1 && url.indexOf('category') == -1) {
                 $('#showbook').value = url.split('/')[2] ? url.split('/')[2] : '' ;
                 url = 'book';
 
             };
-            if(url.indexOf('category') != -1) url = 'category';
+            if(url.indexOf('category') != -1){
+                $('#showbook').value = url.split('/')[2] ? url.split('/')[2] : '' ;
+                $('#showchapter').value = url.split('/')[4] ? url.split('/')[4] : '' ;
+                url = 'category'
+            };
             
 
             return fetch(`/page/${url}.html`).then(p => p.text())

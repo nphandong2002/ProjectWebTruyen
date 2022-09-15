@@ -115,5 +115,8 @@ var bookService = {
     },
     getBook: function(id){
         return postApi("/book?id=" + id);
+    },
+    getChapter: function(id){
+        return postApi(`/book/chapter/${id}`)
     }
 }
